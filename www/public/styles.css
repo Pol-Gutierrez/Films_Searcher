@@ -1,0 +1,23 @@
+.main_color {
+    background-color: #AC0505;
+    color: white;
+    border: none;
+}
+
+.main_color:hover {
+    background-color: #D91C1C;
+}   
+
+#sign-up-btn:active {
+    background-color: #8A0404;
+}   
+
+.error {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 4px;
+}
+
+.card-custom {
+    --bs-card-bg: #00FFFF;
+}
