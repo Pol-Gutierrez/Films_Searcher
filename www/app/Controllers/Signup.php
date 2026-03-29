@@ -2,52 +2,48 @@
 
 namespace App\Controllers;
 
+use App\Models\UserModel;
+
 class Signup extends BaseController {
 
     // function to show the sign up page:
     public function showSignUpPage() {
+        helper(['form']);
         return view('sign_up');
     }
 
     // function when submitting the sign up form:
     public function submit() {
-        // rules for validating the form data:
-        $rules = [
-            'email' => [
-                'rules' => 'required|regex_match[/^[a-zA-Z0-9._%+-]+@salle\.url\.edu$/]',
-                'errors' => [
-                    'required' => 'The email address is not valid.',
-                    'regex_match' => 'Only emails from the domain @salle.url.edu are accepted.',
-                ]
-            ],
+        helper(['form']);
 
-            'password' => [
-                'rules' => 'required|min_length[7]|regex_match[/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/]',
-                'errors' => [
-                    'required' => 'The password is not valid.',
-                    'min_length' => 'The password must contain at least 7 characters.',
-                    'regex_match' => 'The password must contain both upper and lower case letters and numbers.',
-                ]
-            ],
+        // array to store the errors:
+        $errors = [];
 
-            'confirm_password' => [
-                'rules' => 'required|matches[password]',
-                'errors' => [
-                    'required' => 'This field can not be empty.',
-                    'matches' => 'Passwords do not match.',
-                ]
-            ],
+        // get the info from the form:
+        $confirmed_password = $this->request->getPost('confirm_password');
+        $password = $this->request->getPost('password');
+
+        // validate that the password and confirm password are the same:
+        if ($confirmed_password !== $password) {
+            $errors['confirm_password'] = 'Passwords do not match.';
+        }
+
+        if (!$this->validate(['password' => 'checkPassword'])) {
+            $errors['password'] = $this->validator->getError('password');
+        }
+
+        $data = [
+            'email'    => $this->request->getPost('email'),
+            'password' => password_hash($password, PASSWORD_DEFAULT),
         ];
 
+        $userModel = new UserModel();
 
-        if ($this->validate($rules)) {
-            // Process the data (e.g., save to database)
+        if ($userModel->insert($data)) {
             return redirect()->to('/log-in');
         } else {
-            // Reload the form with error messages
-            //return redirect()->back()->withInput();
-
-            return redirect()->back()->withInput()->with('validation', $this->validator);
+            $errors = array_merge($errors, $userModel->errors());
+            return redirect()->back()->withInput()->with('errors', $errors);
         }
     }
 
