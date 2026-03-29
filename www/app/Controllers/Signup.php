@@ -39,17 +39,16 @@ class Signup extends BaseController {
 
         $userModel = new UserModel();
 
-        if ($userModel->insert($data)) {
-            return redirect()->to('/log-in');
-        } else {
-            $errors = array_merge($errors, $userModel->errors());
+        try {
+            if ($userModel->insert($data)) {
+                return redirect()->to('/sign-in');
+            } else {
+                $errors = array_merge($errors, $userModel->errors());
+                return redirect()->back()->withInput()->with('errors', $errors);
+            }
+        } catch (\Exception $e) {
+            $errors['email'] = 'The email address is already registered.';
             return redirect()->back()->withInput()->with('errors', $errors);
         }
-    }
-
-    // function to show the log in page after signing up:
-    public function showLoginPage() {
-        echo "You have successfully signed up! Please log in.";
-        //return view('log_in'); 
     }
 }

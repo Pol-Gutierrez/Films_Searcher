@@ -20,9 +20,7 @@ class UserModel extends Model {
     protected $updatedField  = 'updated_at';
 
     protected $validationRules = [
-        //'email'    => 'required|regex_match[/^[a-zA-Z0-9._%+-]+@salle\.url\.edu$/]',
         'email'    => 'required|checkEmailDomain[salle.url.edu]',
-        //'password' => 'required|min_length[6]|regex_match[/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/]',
         'password' => 'required|min_length[6]',
     ];
     protected $validationMessages = [
@@ -33,7 +31,6 @@ class UserModel extends Model {
         'password' => [
             'required' => 'The password is not valid.',
             'min_length' => 'The password must contain at least 6 characters.',
-            // 'checkPassword' => 'The password must contain both upper and lower case letters and numbers.',
         ],
     ];
 
