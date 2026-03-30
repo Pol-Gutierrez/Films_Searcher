@@ -25,6 +25,11 @@ $routes->group('', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('/sign-in', 'Signin::submit'); 
 });
 
+// MOVIE SEARCH
+$routes->group('', ['namespace' => 'App\Controllers'], function ($routes) {
+    $routes->get('/movies', 'SearchController::processSearchBar');
+});
+
 
 
 

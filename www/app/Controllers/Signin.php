@@ -64,7 +64,7 @@ class Signin extends BaseController {
             if ($ok) {
                 session()->set('isLoggedIn', true);
                 session()->set('email', $userInfo['email']);
-                return redirect()->to('/films');
+                return redirect()->to('/movies');
             } else {
                 $errors['general'] = 'Your email and/or password are incorrect.';
             }
