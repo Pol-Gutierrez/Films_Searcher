@@ -30,6 +30,8 @@
 
                                         <div class="card-body">
                                             <h5 class="card-title"><?= $movie['title'] ?></h5>
+                                            <h5 class="card-subtitle mb-2 text-muted"><?= $movie['release_date'] ?></h5>
+                                            <p class="card-text"><strong>Overview:<br></strong> <?= $movie['overview'] ?></p>
                                         </div>                    
 
                                         <a href="recipe.php?id=<?= $movie['id'] ?>&return=<?= urlencode($_SERVER['REQUEST_URI']) ?>" class="btn btn-success main_color rounded-4">
