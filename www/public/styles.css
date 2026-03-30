@@ -21,3 +21,7 @@
 .card-custom {
     --bs-card-bg: #00FFFF;
 }
+
+.header_custom {
+    background-color: #AC0505;
+}

@@ -7,11 +7,16 @@ use CodeIgniter\Router\RouteCollection;
  */
 
 
+// HOME PAGE
+$routes->group('', ['namespace' => 'App\Controllers'], function ($routes) {
+    $routes->get('/', 'Home::index');
+    $routes->post('/', 'Home::submit');
+});
+
 // SIGN UP
 $routes->group('', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('/sign-up', 'Signup::showSignUpPage');
     $routes->post('/sign-up', 'Signup::submit');
-
 });
 
 // SIGN IN

@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="<?= base_url('styles.css') ?>">
     </head>
 
-    <body>
+    <body class="bg-dark text-light">
         <?= $this->renderSection('content') ?>
     </body>
 </html>

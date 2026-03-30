@@ -4,8 +4,8 @@
     <?php $validation = session('validation'); ?>
     <?php $errors = session('errors'); ?>
 
-    <div class="container d-flex justify-content-center align-items-center vh-100">
-        <div class="rounded-5 card p-4 shadow-lg" style="width: 30rem;">
+    <div class="container d-flex justify-content-center align-items-center vh-100">    
+        <div class="rounded-5 card p-4 shadow-lg shadow-strong" style="width: 30rem;">
             
             <div class="text-center">
                 <img src="<?= base_url('images/pet.png') ?>" alt="login" style="width: 150px;">
