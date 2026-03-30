@@ -27,10 +27,13 @@ $routes->group('', ['namespace' => 'App\Controllers'], function ($routes) {
 
 // MOVIE SEARCH
 $routes->group('', ['namespace' => 'App\Controllers'], function ($routes) {
-    $routes->get('/movies', 'SearchController::processSearchBar');
+    $routes->get('/movies', 'SearchController::processSearchBar', ['filter' => 'before']);
 });
 
-
+// LOGOUT
+$routes->group('', ['namespace' => 'App\Controllers'], function ($routes) {
+    $routes->get('/logout', 'Logout::logout');
+});
 
 
 
