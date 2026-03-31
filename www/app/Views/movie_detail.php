@@ -24,11 +24,13 @@
                             <?php endif; ?>
                         </div>
 
-                        <div>
-                            <form method="POST" action="/favorites">
-                                
+                        <div class="d-flex justify-content-between">
+                            <form method="POST" action="/favorites">                                
                                 <button class="btn btn-success main_color" name="action" value="btn">Favorites</button>
-                            </form>                
+                            </form>
+                            <form method="POST" action="/share">                                
+                                <button class="btn btn-success main_color" name="action" value="btn">Share</button>
+                            </form>                   
                         </div>
                     </div>
             
@@ -104,7 +106,7 @@
                     <textarea class="form-control bg-secondary text-white" name="comment" rows="3" required></textarea>
                 </div>
 
-                <button type="submit" class="btn btn-success">Submit</button>
+                <button type="submit" class="btn btn-success main_color">Submit</button>
             </form>
 
             <hr class="border-secondary my-4">

@@ -47,7 +47,7 @@ class ApiClient {
                 ],
                 'query' => [
                     'append_to_response' => 'credits',
-                    'language' => 'es-ES'
+                    'language' => 'en-US',
                 ]
             ]);
 

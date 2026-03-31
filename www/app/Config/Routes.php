@@ -32,7 +32,10 @@ $routes->group('', ['namespace' => 'App\Controllers'], function ($routes) {
 
 // MOVIE DETAIL
 $routes->group('', ['namespace' => 'App\Controllers'], function ($routes) {
-    $routes->get('/movie/(:num)', 'Detail::showDetail/$1', ['filter' => 'before:You must be logged in to access the movie details page.']);
+    $routes->get('/movie/(:num)', 'Detail::showDetail/$1', ['filter' => 'before:movie_details']);
+    $routes->post('/movie', 'Detail::submit', ['filter' => 'before:movie_details']);
+    $routes->post('/favorites', 'Detail::submit', ['filter' => 'before:movie_details']);
+    $routes->post('/shared', 'Detail::submit', ['filter' => 'before:movie_details']);
 });
 
 // LOGOUT
