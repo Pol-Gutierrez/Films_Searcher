@@ -25,3 +25,13 @@
 .header_custom {
     background-color: #AC0505;
 }
+
+.bg-image {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    background-color: rgba(0,0,0,0.55);
+    background-blend-mode: darken;
+}

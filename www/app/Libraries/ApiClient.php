@@ -12,6 +12,7 @@ class ApiClient {
         $this->client = new Client();
     }
 
+    // function to search movies by name:
     public function searchMovies($query) {
         try {
             $response = $this->client->request('GET', 'https://api.themoviedb.org/3/search/movie', [
@@ -32,6 +33,29 @@ class ApiClient {
             return $data;
         } catch (\Exception $e) {
             $data['error'] = "An error occurred.";
+            return $data;
+        }
+    }
+
+    // function to search for a movie by id:
+    public function getMovieById($id) {
+        try {
+            $response = $this->client->request('GET', "https://api.themoviedb.org/3/movie/$id", [
+                'headers' => [
+                    'Authorization' => $this->token,
+                    'accept' => 'application/json',
+                ],
+                'query' => [
+                    'append_to_response' => 'credits',
+                    'language' => 'es-ES'
+                ]
+            ]);
+
+            $data = json_decode($response->getBody(), true);
+
+            return $data;
+        } catch (\Exception $e) {
+            $data['error'] = 'The movie you are searching for does not exist.';
             return $data;
         }
     }

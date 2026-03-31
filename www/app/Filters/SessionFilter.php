@@ -11,7 +11,7 @@ class SessionFilter implements FilterInterface {
         // Check if the user is logged in
         if (!session()->get('isLoggedIn')) {
             // If not logged in, redirect to the login page
-            return redirect()->to('/sign-in');
+            return redirect()->to('/sign-in')->with('errors', ['general' => 'You must be logged in to access the movies page.']);
         }
     }
 

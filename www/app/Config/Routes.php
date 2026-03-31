@@ -30,6 +30,11 @@ $routes->group('', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('/movies', 'SearchController::processSearchBar', ['filter' => 'before']);
 });
 
+// MOVIE DETAIL
+$routes->group('', ['namespace' => 'App\Controllers'], function ($routes) {
+    $routes->get('/movie/(:num)', 'Detail::showDetail/$1', ['filter' => 'before:You must be logged in to access the movie details page.']);
+});
+
 // LOGOUT
 $routes->group('', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('/logout', 'Logout::logout');

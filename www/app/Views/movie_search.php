@@ -34,7 +34,8 @@
                                             <p class="card-text"><strong>Overview:<br></strong> <?= $movie['overview'] ?></p>
                                         </div>                    
 
-                                        <a href="recipe.php?id=<?= $movie['id'] ?>&return=<?= urlencode($_SERVER['REQUEST_URI']) ?>" class="btn btn-success main_color rounded-4">
+                                        <a href="/movie/<?= $movie['id'] ?>" class="btn btn-success main_color rounded-4">
+
                                             See more
                                         </a>
 

@@ -1,9 +1,6 @@
 <?= $this->extend('general_layout') ?>
 
 <?= $this->section('content') ?>
-    
-
-
         <!-- NAVBAR -->
         <nav class="navbar navbar-expand-lg navbar-dark header_custom">
             <div class="container">
