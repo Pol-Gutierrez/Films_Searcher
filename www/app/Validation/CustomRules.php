@@ -25,8 +25,4 @@ class CustomRules {
 
         return true;
     }
-
-    // possible -> to validate if the email is unique in the database:
-    
-    // possible -> to validate if the password corresponds to the email in the database:
 }

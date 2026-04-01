@@ -28,16 +28,26 @@ class Signup extends BaseController {
             $errors['confirm_password'] = 'Passwords do not match.';
         }
 
-        if (!$this->validate(['password' => 'checkPassword'])) {
-            $errors['password'] = $this->validator->getError('password');
+        $userModel = new UserModel();
+
+        // validate the email and password using the rules in the model:
+        $info = [
+            'email' => $this->request->getPost('email'),
+            'password' => $password,
+        ];
+
+        if (!$userModel->validate($info)) {
+            $errors = array_merge($errors, $userModel->errors());
+        }
+
+        if (!empty($errors)) {
+            return redirect()->back()->withInput()->with('errors', $errors);
         }
 
         $data = [
             'email'    => $this->request->getPost('email'),
             'password' => password_hash($password, PASSWORD_DEFAULT),
-        ];
-
-        $userModel = new UserModel();
+        ];        
 
         try {
             if ($userModel->insert($data)) {
