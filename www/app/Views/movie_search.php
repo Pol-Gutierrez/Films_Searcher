@@ -2,9 +2,10 @@
 
 <?= $this->section('content') ?>
     <div class="container position-relative">
-        <a href="/favorites" class="btn btn-success main_color position-absolute top-20 start-10 translate-middle">
-            See favorites
-        </a>
+        <div class="d-flex flex-column gap-2 position-absolute top-20 start-10 translate-middle mt-4">
+            <a href="/favorites" class="btn btn-success main_color">See favorites</a>
+            <a href="/shared" class="btn btn-success main_color">See shared</a>
+        </div>
 
         <a href="/logout"class="btn btn-succes position-absolute top-20 start-100 translate-middle main_color">Logout</a>
     </div>

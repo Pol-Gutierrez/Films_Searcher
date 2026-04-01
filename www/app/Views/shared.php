@@ -7,13 +7,13 @@
     <div class="container d-flex flex-column align-items-center justify-content-center gap-5 mt-5">    
         <img src="<?= base_url('images/pet.png') ?>" alt="login" style="width: 150px;">
 
-        <h2>Favorites</h2>
+        <h2>Shared Movies</h2>
 
         <div id="cards-container" class="w-100">
             <div class="container mt-4">
                 <div class="row g-4 justify-content-center">
-                    <?php if (!empty($favorites)): ?>
-                        <?php foreach ($favorites as $movie): ?>
+                    <?php if (!empty($shared)): ?>
+                        <?php foreach ($shared as $movie): ?>
                             <div class="col-md-4 mt-4">     
                                 <div class="card h-100 shadow border-1 rounded-4 bg-black text-light">
                                     <img src="https://image.tmdb.org/t/p/w500<?= $movie['poster'] ?>" style="height: 300px; object-fit: cover;" class="card-img-top rounded-4">

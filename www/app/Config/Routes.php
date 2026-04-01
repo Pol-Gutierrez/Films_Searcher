@@ -43,6 +43,11 @@ $routes->group('', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('/favorites', 'Favorites::showFavorites', ['filter' => 'before']);
 });
 
+// SHARED
+$routes->group('', ['namespace' => 'App\Controllers'], function ($routes) {
+    $routes->get('/shared', 'Shared::showShared', ['filter' => 'before']);
+});
+
 // LOGOUT
 $routes->group('', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('/logout', 'Logout::logout');
