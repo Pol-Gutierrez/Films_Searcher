@@ -25,12 +25,12 @@
                         <?php if (!empty($data['results'])): ?>
                             <?php foreach ($data['results'] as $movie): ?>
                                 <div class="col-md-4 mt-4">     
-                                    <div class="card h-100 shadow border-1 rounded-4">
+                                    <div class="card h-100 shadow border-1 rounded-4 bg-black text-light">
                                         <img src="https://image.tmdb.org/t/p/w500<?= $movie['poster_path'] ?>" style="height: 300px; object-fit: cover;" class="card-img-top rounded-4" alt="Imagen receta">
 
-                                        <div class="card-body">
-                                            <h5 class="card-title"><?= $movie['title'] ?></h5>
-                                            <h5 class="card-subtitle mb-2 text-muted"><?= $movie['release_date'] ?></h5>
+                                        <div class="card-body bg-black text-light">
+                                            <h5 class="card-title"><strong><?= $movie['title'] ?></strong></h5>
+                                            <h5 class="card-subtitle mb-2 text-info"><?= $movie['release_date'] ?></h5>
                                             <p class="card-text"><strong>Overview:<br></strong> <?= $movie['overview'] ?></p>
                                         </div>                    
 

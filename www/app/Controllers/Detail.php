@@ -29,15 +29,31 @@ class Detail extends BaseController {
         ];
 
         $errors = [];
+        $comments = [];
+
+        $commentModel = new CommentModel();
 
         try {
+            // petition to insert the movie:            
             $movieModel->insert($movieData);
         } catch (\Exception $e) {
             $errors['email'] = 'The movie can not be inserted in the database.';
         }
-        
+        try {
+            // petition to get all the comments related to the movie:            
+            $comments = $commentModel->select('comments.*, users.email')
+            ->join('users', 'users.id = comments.user_id')->where('comments.movie_id', ($movieModel->where('api_id', $data['id'])->first()['id']))
+            ->findAll();
+
+            // go trough the comments and get the username from the email:
+            foreach ($comments as &$comment) {
+                $comment['username'] = ucfirst(explode('@', $comment['email'])[0]);            
+            }
+        } catch (\Exception $e) {
+            $errors['email'] = 'Not possible to get the comments from the database.';            
+        }
         // get the view:
-        return view('movie_detail', ['data' => $data]);
+        return view('movie_detail', ['data' => $data, 'comments' => $comments]);
     }
 
     // function to handle the comment form submission:

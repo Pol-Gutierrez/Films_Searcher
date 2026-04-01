@@ -96,9 +96,6 @@
             </div>
         </div>
 
-
-        
-
         <div class="card bg-dark text-white mt-4 p-4">
             <h4 class="mb-3">Comments</h4>
             
@@ -122,31 +119,22 @@
             <!-- list of comments -->
             <div class="d-flex flex-column gap-3">
 
-                <!-- individual comment -->
-                <div class="d-flex gap-3">
-                    <img src="https://ui-avatars.com/api/?name=User&background=444&color=fff" 
-                        class="rounded-circle" width="50" height="50">
-
-                    <div>
-                        <h6 class="m-0 fw-bold">Pol 1</h6>
-                        <small class="text-secondary">2 hours ago</small>
-                        <p class="m-0 mt-1">Example comment.The movie was amazing.</p>
-                    </div>
-                </div>
-
-                <div class="d-flex gap-3">
-                    <img src="https://ui-avatars.com/api/?name=Maria&background=444&color=fff" 
-                        class="rounded-circle" width="50" height="50">
-
-                    <div>
-                        <h6 class="m-0 fw-bold">Jane</h6>
-                        <small class="text-secondary">1 day ago</small>
-                        <p class="m-0 mt-1">I loved the animation and the story.</p>
-                    </div>
-                </div>
-
+                <?php if (empty($comments)): ?>
+                    <p>No comments yet. Be the first to comment!</p>
+                <?php else: ?>
+                    <?php foreach ($comments as $comment): ?>
+                        <div class="d-flex gap-3">                        
+                            <img src="<?= base_url('images/profile.png') ?>" 
+                                class="rounded-circle" width="50" height="50">
+                            <div>
+                                <h6 class="m-0 fw-bold"><?= $comment['username'] ?></h6>
+                                <small class="text-secondary"><?= $comment['created_at'] ?></small>
+                                <p class="m-0 mt-1"><?= $comment['comment'] ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>    
+                <?php endif; ?>                  
             </div>
         </div>
-
     </body>
 </html>
