@@ -28,7 +28,7 @@
                         <div class="d-flex justify-content-between">
                             <form method="POST" action="/favorites"> 
                                 <input type="hidden" name="movie_id" value="<?= $data['id'] ?>">                               
-                                <button class="btn btn-success main_color" name="action" value="btn">Favorites</button>
+                                <button class="btn btn-success main_color" name="action" value="<?= $btnText ?>"><?= $btnText ?></button>
                             </form>
                             <form method="POST" action="/shared">    
                                 <input type="hidden" name="movie_id" value="<?= $data['id'] ?>">                            

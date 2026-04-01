@@ -39,10 +39,11 @@ class Detail extends BaseController {
         } catch (\Exception $e) {
             $errors['email'] = 'The movie can not be inserted in the database.';
         }
+        $movie = $movieModel->where('api_id', $data['id'])->first(); // get the movie from the database to have the id for the comments
         try {
             // petition to get all the comments related to the movie:            
             $comments = $commentModel->select('comments.*, users.email')
-            ->join('users', 'users.id = comments.user_id')->where('comments.movie_id', ($movieModel->where('api_id', $data['id'])->first()['id']))
+            ->join('users', 'users.id = comments.user_id')->where('comments.movie_id', $movie['id'])
             ->findAll();
 
             // go trough the comments and get the username from the email:
@@ -52,8 +53,18 @@ class Detail extends BaseController {
         } catch (\Exception $e) {
             $errors['email'] = 'Not possible to get the comments from the database.';            
         }
+
+        // check if the movie is already in the database to modify the favorites text:
+        $favoritesModel = new FavoritesShareModel();
+        $favoritesModel->setTable('favorites');
+
+        $isFavorite = $favoritesModel->where('user_id', session()->get('user_id'))->where('movie_id', $movie['id'])->first();
+
+        $btnText = $isFavorite ? 'Remove from favorites' : 'Add to favorites';
+        //$btnText = 'Add to favorites';
+
         // get the view:
-        return view('movie_detail', ['data' => $data, 'comments' => $comments]);
+        return view('movie_detail', ['data' => $data, 'comments' => $comments, 'btnText' => $btnText]);
     }
 
     // function to handle the comment form submission:
@@ -101,6 +112,17 @@ class Detail extends BaseController {
 
     // function to handle the favorites button:
     public function addToFavorites() {
+        // get the text of the button to know if we have to add or remove the favorite:
+        $action = $this->request->getPost('action');
+        if ($action === 'Add to favorites') {
+            return $this->handleAddToFavorites();
+        } else if ($action === 'Remove from favorites') {
+            return $this->handleRemoveFromFavorites();
+        }        
+    }
+
+    // function to handle the add to favorites:
+    private function handleAddToFavorites() {
         // get required info to be added:
         $info = [
             'user_id' => session()->get('user_id'),            
@@ -109,6 +131,32 @@ class Detail extends BaseController {
 
         // save the favorite in the database:
         $errors = $this->insertIntoDDBB($info, true);
+
+        // get the view:
+        return redirect()->back()->withInput()->with('errors', $errors);
+    }
+
+    // function to handle the remove from favorites:
+    private function handleRemoveFromFavorites() {
+        // get required info to be removed:
+        $userId = session()->get('user_id');
+        $id_movie = $this->request->getPost('movie_id');
+
+        // get the id of the movie from the database by the api id:
+        $movieModel = new MovieModel();
+        $movie = $movieModel->where('api_id', $id_movie)->first();
+
+        // remove the favorite from the database:
+        $favoritesModel = new FavoritesShareModel();
+        $favoritesModel->setTable('favorites');
+
+        $errors = [];
+
+        try {
+            $favoritesModel->where('user_id', $userId)->where('movie_id', $movie['id'])->delete();
+        } catch (\Exception $e) {
+            $errors['favorites'] = 'Error processing the favorite.';
+        }
 
         // get the view:
         return redirect()->back()->withInput()->with('errors', $errors);
