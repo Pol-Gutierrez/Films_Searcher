@@ -10,6 +10,7 @@
     </head>
 
     <body class="bg-image" style="background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('https://image.tmdb.org/t/p/original<?= $data['backdrop_path'] ?>');">
+        <?php $errors = session('errors'); ?>
         <div class="pt-4 ps-4">
             <a href="/movies" class="btn btn-success main_color">Back</a>
         </div>
@@ -100,12 +101,17 @@
             <h4 class="mb-3">Comments</h4>
             
             <!-- form to add a new comment -->
-            <form method="POST" action="/comments/add">
+            <form method="POST" action="/movie/<?= $data['id'] ?>">
                 <div class="mb-3">
                     <label class="form-label">Your comment</label>
                     <textarea class="form-control bg-secondary text-white" name="comment" rows="3" required></textarea>
+                    <?php if (isset($errors['comment'])): ?>
+                        <p class="error"><?= $errors['comment'] ?></p> 
+                    <?php endif; ?>                
+                    <?php if (isset($errors['success'])): ?>
+                        <div class="text-success"><?= esc($errors['success']) ?></div>
+                    <?php endif; ?>
                 </div>
-
                 <button type="submit" class="btn btn-success main_color">Submit</button>
             </form>
 

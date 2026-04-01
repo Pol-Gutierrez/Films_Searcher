@@ -37,7 +37,7 @@ class Signin extends BaseController {
         // get the email field:
         $email = $this->request->getPost('email');
         
-       $rules = [
+        $rules = [
                 'email' => 'required|checkEmailDomain[salle.url.edu]',
                 'password' => 'required|checkPassword',
             ];
@@ -64,6 +64,7 @@ class Signin extends BaseController {
             if ($ok) {
                 session()->set('isLoggedIn', true);
                 session()->set('email', $userInfo['email']);
+                session()->set('user_id', $userInfo['id']);
                 return redirect()->to('/movies');
             } else {
                 $errors['general'] = 'Your email and/or password are incorrect.';
