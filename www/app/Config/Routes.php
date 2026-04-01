@@ -38,6 +38,11 @@ $routes->group('', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('/shared', 'Detail::share', ['filter' => 'before:movie_details']);
 });
 
+// FAVORITES
+$routes->group('', ['namespace' => 'App\Controllers'], function ($routes) {
+    $routes->get('/favorites', 'Favorites::showFavorites', ['filter' => 'before']);
+});
+
 // LOGOUT
 $routes->group('', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('/logout', 'Logout::logout');

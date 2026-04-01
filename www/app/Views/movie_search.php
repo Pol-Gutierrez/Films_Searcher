@@ -2,10 +2,10 @@
 
 <?= $this->section('content') ?>
     <div class="container position-relative">
-        <form action="favorites.php" method="POST">
-            <input type="hidden" name="return_url" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
-            <button class="btn btn-succes position-absolute top-20 start-10 translate-middle main_color" name="action">See favorites</button>
-        </form>
+        <a href="/favorites" class="btn btn-success main_color position-absolute top-20 start-10 translate-middle">
+            See favorites
+        </a>
+
         <a href="/logout"class="btn btn-succes position-absolute top-20 start-100 translate-middle main_color">Logout</a>
     </div>
         
