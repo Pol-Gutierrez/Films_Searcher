@@ -6,8 +6,7 @@ use App\Libraries\ApiClient;
 
 use App\Models\MovieModel;
 use App\Models\CommentModel;
-//use App\Models\FavoritesModel;
-//use App\Models\ShareModel;
+use App\Models\FavoritesShareModel;
 
 class Detail extends BaseController {
     public function showDetail() {
@@ -53,18 +52,12 @@ class Detail extends BaseController {
         // get the comment from the form:
         $commentText = $this->request->getPost('comment');
 
-        /*echo "User ID: " . $userId; // For debugging purposes
-        echo "Movie ID: " . $id; // For debugging purposes
-        echo "Comment: " . $commentText; // For debugging purposes*/
-
         // get the id of the movie from the database by the api id:
         $movieModel = new MovieModel();
         $movie = $movieModel->where('api_id', $id_movie)->first();
 
         // save the comment in the database:
         $commentModel = new CommentModel();
-
-        //echo "Movie: " . print_r($movie, true); // For debugging purposes
 
         $commentData = [
             'user_id' => $userId,
@@ -85,8 +78,6 @@ class Detail extends BaseController {
             echo "Exception: " . $e->getMessage(); // For debugging purposes
             $errors['comment'] = 'Error processing the comment.';
         }
-
-        //echo "Errors: " . print_r($errors, true); // For debugging purposes
         
         // get the view:        
         return redirect()->back()->withInput()->with('errors', $errors);
@@ -94,11 +85,71 @@ class Detail extends BaseController {
 
     // function to handle the favorites button:
     public function addToFavorites() {
+        // get required info to be added:
+        $info = [
+            'user_id' => session()->get('user_id'),            
+            'id_movie' => $this->request->getPost('movie_id'),
+        ];
 
+        // save the favorite in the database:
+        $errors = $this->insertIntoDDBB($info, true);
+
+        // get the view:
+        return redirect()->back()->withInput()->with('errors', $errors);
     }
 
     // function to handle the share button:
     public function share() {
+        // get required info to be added:
+        $info = [
+            'user_id' => session()->get('user_id'),            
+            'id_movie' => $this->request->getPost('movie_id'),
+        ];
 
+        // save the favorite in the database:
+        $errors = $this->insertIntoDDBB($info, false);
+
+        // get the view:
+        return redirect()->back()->withInput()->with('errors', $errors);
+    }
+
+    // function to handle the insert in the database:
+    private function insertIntoDDBB($info, $favorites) {
+        // get the id of the movie from the database by the api id:
+        $movieModel = new MovieModel();
+        $movie = $movieModel->where('api_id', $info['id_movie'])->first();
+
+        // save the comment in the database:
+        $model = new FavoritesShareModel();
+        if ($favorites) {
+            $model->setTable('favorites');
+        } else {
+            $model->setTable('shared_movies');
+        }
+
+        $dataInsert = [
+            'user_id' => $info['user_id'],
+            'movie_id' => $movie['id'],
+        ];
+
+        $errors = [];
+
+        try {
+            if (!$model->insert($dataInsert)) {
+                //$errorsAux = $model->errors();
+                //$errors = array_merge($errors, $errorsAux['comment'] ?? []);                
+            } else {
+                //$errors['success'] = 'Comment added successfully.';
+            }
+        } catch (\Exception $e) {
+            echo "Exception: " . $e->getMessage(); // For debugging purposes
+            if ($favorites) {
+                $errors['favorites'] = 'Error processing the favorite.';
+            } else {
+                $errors['share'] = 'Error processing the share.';
+            }
+        }
+
+        return $errors;
     }
 }
