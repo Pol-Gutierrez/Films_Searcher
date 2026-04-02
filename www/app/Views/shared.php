@@ -21,7 +21,7 @@
                                     <div class="card-body bg-black text-light">
                                         <h5 class="card-title"><strong><?= $movie['title'] ?></strong></h5>
                                         <h5 class="card-subtitle mb-2 text-info"><?= $movie['year'] ?></h5>
-                                        <p class="card-text"><strong>Overview:<br></strong> <?= $movie['introduction'] ?></p>
+                                        <p class="card-text mt-3"><strong>Shared by:</strong><br><span class="text-light"><?= $movie['username'] ?></span></p>
                                     </div>                    
 
                                     <a href="/movie/<?= $movie['api_id'] ?>" class="btn btn-success main_color rounded-4">

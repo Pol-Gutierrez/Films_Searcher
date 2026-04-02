@@ -6,13 +6,12 @@ use App\Libraries\ApiClient;
 
 use App\Models\FavoritesShareModel;
 use App\Models\MovieModel;
+use App\Models\UserModel;
 
 class Shared extends BaseController {
     // function to show the favorites list page:
     public function showShared() {
         helper(['form']);
-        // get the user id from the session:
-        $userId = session()->get('user_id');
 
         // get the favorites from the database:
         $shareModel = new FavoritesShareModel();
@@ -22,10 +21,15 @@ class Shared extends BaseController {
         $data = [];
 
         try {
-            $data = $shareModel->select('shared_movies.*, movies.api_id, movies.title, movies.introduction, movies.year, movies.poster')
+            $data = $shareModel->select('shared_movies.*, movies.api_id, movies.title, movies.introduction, movies.year, movies.poster, users.email')
                 ->join('movies', 'movies.id = shared_movies.movie_id')
-                ->where('shared_movies.user_id', $userId)
+                ->join('users', 'users.id = shared_movies.user_id')                
                 ->findAll();
+            
+            // go trough the movies and get the username from the email:
+            foreach ($data as &$movie) {
+                $movie['username'] = ucfirst(explode('@', $movie['email'])[0]);            
+            }
         } catch (\Exception $e) {
             echo "Exception: " . $e->getMessage(); // For debugging purposes
             $error['shared'] = 'Error fetching shared movies from the database.';
